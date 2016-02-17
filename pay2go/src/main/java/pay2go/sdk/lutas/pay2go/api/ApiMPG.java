@@ -46,11 +46,11 @@ public class ApiMPG
 
     public void send(String hashKey,String hashIV){
         long timestamp = Calendar.getInstance().getTimeInMillis();
-        String checkValue = CreateCheckValue(hashKey, hashIV);
-        //Log.i("check value", checkValue);
-        inputValues.put("CheckValue", checkValue);
+
         inputValues.put("TimeStamp", String.valueOf(timestamp));
         inputValues.put("Version", VERSION);
+        String checkValue = CreateCheckValue(hashKey, hashIV);
+        inputValues.put("CheckValue", checkValue);
 
         post();
     }
@@ -60,10 +60,12 @@ public class ApiMPG
                 "HashKey=" + hashKey+
                 "&Amt="+ inputValues.get("Amt")+
                 "&MerchantID="+ inputValues.get("MerchantID")+
-                "&MerchantOrderNo="+ inputValues.get("MerchantID")+
+                "&MerchantOrderNo="+ inputValues.get("MerchantOrderNo")+
                 "&TimeStamp="+ inputValues.get("TimeStamp")+
                 "&Version="+ inputValues.get("Version")+
                 "&HashIV="+ hashIV;
+        Log.i("checkValue", checkValue);
+        Log.i("checkValue", encrypt(checkValue));
         return encrypt(checkValue);
     }
 
