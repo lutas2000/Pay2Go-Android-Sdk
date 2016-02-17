@@ -6,10 +6,10 @@ Pay2Go-Android-Sdk
 
 一、申請支付寶帳號
 ----------------------------------- 
-正式網址：https://www.pay2go.com/
-測試網址：https://cweb.pay2go.com/
-註冊完帳號後在銷售中心開立一個商店
-記下以下資訊：
+正式網址：https://www.pay2go.com/<br /> 
+測試網址：https://cweb.pay2go.com/<br /> 
+註冊完帳號後在銷售中心開立一個商店<br /> 
+記下以下資訊：<br /> 
 商店代號、hashKey、hashIV
 
 二、Import Module
@@ -23,7 +23,7 @@ Pay2Go-Android-Sdk
 在Activity中加入:
 ### 
     Mpg mpg = new Mpg(this);
-    // 必填 -----------------------------------
+    // ============== 必填 =====================
     mpg.setAmt(1000); //支付金額
     mpg.setItemDesc("商品資訊");
     mpg.setLoginType(false); //user是否需要登入支付寶
@@ -31,7 +31,7 @@ Pay2Go-Android-Sdk
     mpg.setMerchantOrderNo("自訂訂單編號");
     mpg.setEmail("付款者emial");
     mpg.setRespondType("JSON");
-    // 選填 -----------------------------------
+    // ============== 選填 =====================
     mpg.setCREDIT(true);
     mpg.setWEBATM(true);
     mpg.setCVS(true);
