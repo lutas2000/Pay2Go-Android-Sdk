@@ -18,7 +18,7 @@
 # 三、使用
 在Activity中加入:
 Mpg mpg = new Mpg(this);
-//====== 必填 ================================================
+//必填
 mpg.setAmt(1000); //支付金額
 mpg.setItemDesc("商品資訊");
 mpg.setLoginType(false); //user是否需要登入支付寶
@@ -26,8 +26,8 @@ mpg.setShop("商店代號", "your hashKey", "your hashIV");
 mpg.setMerchantOrderNo("自訂訂單編號");
 mpg.setEmail("付款者emial");
 mpg.setRespondType("JSON");
-//====== 選填 ================================================
+//選填
 mpg.setCREDIT(true);
 mpg.setTest(true); //設定使用test API,不填則使用正式API
-//============================================================
+
 mpg.start();
