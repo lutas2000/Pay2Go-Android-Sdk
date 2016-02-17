@@ -2,15 +2,15 @@ Pay2Go-Android-Sdk
 ===================================
 智付寶非官方Android SDK<br /> 
 簡單使用android串接智付寶API<br /> 
-目前只支援MPG API
+目前只支援MPG API<br />
+詳細說明請參閱智付寶官方API手冊
 
 一、申請支付寶帳號
 ----------------------------------- 
 正式網址：https://www.pay2go.com/<br /> 
 測試網址：https://cweb.pay2go.com/<br /> 
 註冊完帳號後在銷售中心開立一個商店<br /> 
-記下以下資訊：<br /> 
-商店代號、hashKey、hashIV
+記下以下資訊：商店代號、hashKey、hashIV
 
 二、Import Module
 ----------------------------------- 
@@ -44,5 +44,5 @@ Pay2Go-Android-Sdk
 ----------------------------------- 
 mpg.start()後會自動開啟PayActivity<br /> 
 並載入智付寶支付MPG頁面<br />
-![image](https://raw.githubusercontent.com/lutas2000/Pay2Go-Android-Sdk/master/img/pay.png)
+![image](https://raw.githubusercontent.com/lutas2000/Pay2Go-Android-Sdk/master/img/pay.png)<br /> 
 ![image](https://raw.githubusercontent.com/lutas2000/Pay2Go-Android-Sdk/master/img/pay_success.png)
