@@ -3,13 +3,11 @@ package pay2go.sdk.lutas.pay2go;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+
+import org.apache.http.util.EncodingUtils;
 
 import java.util.HashMap;
 
@@ -19,8 +17,6 @@ import java.util.HashMap;
  */
 public class PayActivity extends Activity
 {
-    private ApiConnect api;
-    ProgressBar progressBar;
     WebView webView;
     TextView errorText;
 
@@ -30,38 +26,35 @@ public class PayActivity extends Activity
         setContentView(R.layout.activity_pay);
         initView();
 
-        api = new ApiConnect(mHandler);
         Intent intent = getIntent();
         HashMap<String, String> inputValues =
                 (HashMap<String, String>)intent.getSerializableExtra("inputValues");
         String urlPath = intent.getStringExtra("urlPath");
 
-        api.send(urlPath, inputValues);
+
+        webView.postUrl(urlPath, getPostData(inputValues));
     }
 
     private void initView(){
-        progressBar = (ProgressBar) findViewById(R.id.pay_progressBar);
         webView = (WebView) findViewById(R.id.pay_webView);
         errorText = (TextView) findViewById(R.id.pay_tv);
+        setupWebView();
     }
 
-    private Handler mHandler = new Handler(){
-        @Override
-        public void handleMessage(Message msg){
-            closeProgress();
-            if (msg.what == ApiConnect.RESPONSE_CODE){
-                WebSettings settings = webView.getSettings();
-                settings.setDefaultTextEncodingName("utf-8");
-                settings.setJavaScriptEnabled(true);
-                webView.loadData(api.getHtml(), "text/html; charset=utf-8", "utf-8");
-                //webView.loadUrl("https://html5test.com/");
-            } else if (msg.what == ApiConnect.RESPONSE_ERROR){
-                errorText.setText("連接智付寶時出現錯誤！");
-            }
-        }
-    };
+    private void setupWebView(){
+        WebSettings settings = webView.getSettings();
+        settings.setDefaultTextEncodingName("utf-8");
 
-    private void closeProgress(){
-        progressBar.setVisibility(View.GONE);
+        settings.setJavaScriptEnabled(true);
+    }
+
+    private byte[] getPostData(HashMap<String, String> inputValues){
+        StringBuilder stringBuilder = new StringBuilder();
+        for(String key : inputValues.keySet())
+            stringBuilder.append('&').append(key).append('=')
+                    .append(inputValues.get(key));
+        stringBuilder.delete(0, 1);
+
+        return EncodingUtils.getBytes(stringBuilder.toString(), "BASE64");
     }
 }
