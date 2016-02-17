@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">pay2go</string>
+    <string name="api_version">1.2</string>
 </resources>

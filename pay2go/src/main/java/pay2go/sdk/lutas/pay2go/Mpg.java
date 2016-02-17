@@ -4,6 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 
+import java.security.MessageDigest;
+import java.util.Calendar;
+import java.util.HashMap;
+
 /**
  * Created by lutas on 16/2/16.
  * 智付寶MPG API
@@ -12,21 +16,71 @@ import android.util.Log;
  */
 public class Mpg
 {
+    final static String urlPath = "https://capi.pay2go.com/MPG/mpg_gateway"; //測試專用網址
     final static private String TAG = Mpg.class.getName();
+
     Activity activity;
-    Intent intent;
+    HashMap<String,String> inputValues;
 
     public Mpg(Activity activity) {
         this.activity = activity;
-        intent = activity.getIntent();
+        inputValues = new HashMap<>();
     }
 
+    /**
+     * 打開PayActivity，傳送input values
+     * @param hashKey
+     * @param hashIV
+     */
     public void start(String hashKey,String hashIV){
-        intent.putExtra("hashKey", hashKey);
-        intent.putExtra("hashIV", hashIV);
+        inputValues.put("Version", activity.getString(R.string.api_version));
+        long timestamp = Calendar.getInstance().getTimeInMillis();
+        inputValues.put("TimeStamp", String.valueOf(timestamp));
+        String checkValue = CreateCheckValue(hashKey, hashIV);
+        inputValues.put("CheckValue", checkValue);
 
+        Intent intent = activity.getIntent();
+        intent.putExtra("inputValues", inputValues);
+        intent.putExtra("urlPath", urlPath);
         intent.setClass(activity, PayActivity.class);
         activity.startActivity(intent);
+    }
+
+    private String CreateCheckValue(String hashKey,String hashIV){
+        String checkValue =
+                "HashKey=" + hashKey+
+                        "&Amt="+ inputValues.get("Amt")+
+                        "&MerchantID="+ inputValues.get("MerchantID")+
+                        "&MerchantOrderNo="+ inputValues.get("MerchantOrderNo")+
+                        "&TimeStamp="+ inputValues.get("TimeStamp")+
+                        "&Version="+ inputValues.get("Version")+
+                        "&HashIV="+ hashIV;
+        //Log.i("checkValue", checkValue);
+        //Log.i("checkValue", encrypt(checkValue));
+        return encrypt(checkValue);
+    }
+
+    private String encrypt(String s){
+        try{
+            MessageDigest sha = MessageDigest.getInstance("SHA-256");
+            sha.update(s.getBytes());
+            return byte2hex(sha.digest());
+        }catch(Exception e){
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    private String byte2hex(byte[] b){
+        String hs="";
+        for (int n=0;n<b.length;n++){
+            String stmp = (Integer.toHexString(b[n] & 0XFF));
+            if (stmp.length()==1)
+                hs = hs+ "0"+ stmp;
+            else
+                hs = hs + stmp;
+        }
+        return hs.toUpperCase();
     }
 
     /**
@@ -38,7 +92,7 @@ public class Mpg
             Log.e(TAG, "MerchantID length > 15");
             return;
         }
-        intent.putExtra("MerchantID", MerchantID);
+        inputValues.put("MerchantID", MerchantID);
     }
 
     /**
@@ -49,7 +103,7 @@ public class Mpg
             Log.e(TAG, "RespondType most be 'JSON' or 'String'!");
             return;
         }
-        intent.putExtra("RespondType", RespondType);
+        inputValues.put("RespondType", RespondType);
     }
 
     /**
@@ -60,7 +114,7 @@ public class Mpg
             Log.e(TAG, "LangType most be 'en' or 'zh-tw'!");
             return;
         }
-        intent.putExtra("RespondType", LangType);
+        inputValues.put("RespondType", LangType);
     }
 
     /**
@@ -72,7 +126,7 @@ public class Mpg
             Log.e(TAG, "MerchantID length > 15");
             return;
         }
-        intent.putExtra("MerchantOrderNo", MerchantOrderNo);
+        inputValues.put("MerchantOrderNo", MerchantOrderNo);
     }
 
     /**
@@ -80,7 +134,7 @@ public class Mpg
      * @param Amt 訂單金額(int(10))
      */
     public void setAmt(int Amt){
-        intent.putExtra("Amt", String.valueOf(Amt));
+        inputValues.put("Amt", String.valueOf(Amt));
     }
 
     /**
@@ -91,14 +145,14 @@ public class Mpg
             Log.e(TAG, "ItemDesc length > 50");
             return;
         }
-        intent.putExtra("ItemDesc", ItemDesc);
+        inputValues.put("ItemDesc", ItemDesc);
     }
 
     /**
      * @param TradeLimit 交易限制秒數(int(3)),秒數下限為 60 秒
      */
     public void setTradeLimit(int TradeLimit){
-        intent.putExtra("TradeLimit", String.valueOf(TradeLimit));
+        inputValues.put("TradeLimit", String.valueOf(TradeLimit));
     }
 
     /**
@@ -110,7 +164,7 @@ public class Mpg
             Log.e(TAG, "Email length > 50");
             return;
         }
-        intent.putExtra("Email", Email);
+        inputValues.put("Email", Email);
     }
 
     /**
@@ -119,6 +173,6 @@ public class Mpg
      */
     public void setLoginType(boolean flag){
         String loginType = (flag)? "1" : "0";
-        intent.putExtra("LoginType", loginType);
+        inputValues.put("LoginType", loginType);
     }
 }
