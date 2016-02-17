@@ -39,3 +39,10 @@ Pay2Go-Android-Sdk
     mpg.setTest(true); //設定使用test API,不填則使用正式API
     
     mpg.start();
+
+四、執行
+----------------------------------- 
+mpg.start()後會自動開啟PayActivity<br /> 
+並載入智付寶支付MPG頁面<br />
+![image](https://raw.githubusercontent.com/lutas2000/Pay2Go-Android-Sdk/master/img/pay.png)
+![image](https://raw.githubusercontent.com/lutas2000/Pay2Go-Android-Sdk/master/img/pay_success.png)
