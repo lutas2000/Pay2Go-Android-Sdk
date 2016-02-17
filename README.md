@@ -1,7 +1,7 @@
 Pay2Go-Android-Sdk
 ===================================
-智付寶非官方Android SDK
-簡單使用android串接智付寶API
+智付寶非官方Android SDK<br /> 
+簡單使用android串接智付寶API<br /> 
 目前只支援MPG API
 
 一、申請支付寶帳號
