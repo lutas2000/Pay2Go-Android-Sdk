@@ -22,6 +22,8 @@ public class Mpg
     final static private String TAG = Mpg.class.getName();
 
     Activity activity;
+    String hashKey;
+    String hashIV;
     HashMap<String,String> inputValues;
 
     public Mpg(Activity activity) {
@@ -31,14 +33,12 @@ public class Mpg
 
     /**
      * 打開PayActivity，傳送input values
-     * @param hashKey
-     * @param hashIV
      */
-    public void start(String hashKey,String hashIV){
+    public void start(){
         inputValues.put("Version", activity.getString(R.string.api_version));
         long timestamp = Calendar.getInstance().getTimeInMillis();
         inputValues.put("TimeStamp", String.valueOf(timestamp));
-        String checkValue = CreateCheckValue(hashKey, hashIV);
+        String checkValue = CreateCheckValue();
         inputValues.put("CheckValue", checkValue);
 
         Intent intent = activity.getIntent();
@@ -51,7 +51,7 @@ public class Mpg
         activity.startActivity(intent);
     }
 
-    private String CreateCheckValue(String hashKey,String hashIV){
+    private String CreateCheckValue(){
         String checkValue =
                 "HashKey=" + hashKey+
                         "&Amt="+ inputValues.get("Amt")+
@@ -93,6 +93,18 @@ public class Mpg
      */
     public void setTest(boolean flag){
         isTest = flag;
+    }
+
+    /**
+     * 設定商店資訊
+     * @param MerchantID 商店代號
+     * @param hashKey
+     * @param hashIV
+     */
+    public void setShop(String MerchantID,String hashKey,String hashIV){
+        this.hashKey = hashKey;
+        this.hashIV = hashIV;
+        inputValues.put("MerchantID", MerchantID);
     }
 
     /**
