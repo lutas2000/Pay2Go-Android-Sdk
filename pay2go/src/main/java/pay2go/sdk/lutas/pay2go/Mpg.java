@@ -2,6 +2,9 @@ package pay2go.sdk.lutas.pay2go;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.support.annotation.ColorRes;
 import android.util.Log;
 
 import java.security.MessageDigest;
@@ -11,6 +14,7 @@ import java.util.HashMap;
 /**
  * Created by lutas on 16/2/16.
  * 智付寶MPG API
+ * 用於建立交易
  * 請注意set所有必填value
  * start後自動開啟PayActivity
  */
@@ -22,6 +26,8 @@ public class Mpg
     final static private String TAG = Mpg.class.getName();
 
     Activity activity;
+    Intent intent;
+
     String hashKey;
     String hashIV;
     HashMap<String,String> inputValues;
@@ -29,6 +35,7 @@ public class Mpg
     public Mpg(Activity activity) {
         this.activity = activity;
         inputValues = new HashMap<>();
+        intent = activity.getIntent();
     }
 
     /**
@@ -41,7 +48,6 @@ public class Mpg
         String checkValue = CreateCheckValue();
         inputValues.put("CheckValue", checkValue);
 
-        Intent intent = activity.getIntent();
         intent.putExtra("inputValues", inputValues);
         if (isTest)
             intent.putExtra("urlPath", testUrlPath);
@@ -216,7 +222,7 @@ public class Mpg
     }
 
     /**
-     * 當交易取消時,平台會出現返回鈕,使消費 者依以此參數網址返回商店指定的頁面
+     * 當交易取消時,平台會出現返回鈕,使消費者依以此參數網址返回商店指定的頁面
      * 此參數若為空值時,則無返回鈕
      * @param ClientBackURL 支付取消 返回商店網址(Varchar(50))
      */
@@ -297,7 +303,6 @@ public class Mpg
 
     /**
      * 信用卡 銀聯卡啟用
-     * @param flag true:啟用 false:不啟用
      */
     public void setUNIONPAY(boolean flag){
         String UNIONPAY = (flag)? "1" : "0";
@@ -306,7 +311,6 @@ public class Mpg
 
     /**
      * WEBATM 啟用
-     * @param flag true:啟用 false:不啟用
      */
     public void setWEBATM(boolean flag){
         String WEBATM = (flag)? "1" : "0";
@@ -315,7 +319,6 @@ public class Mpg
 
     /**
      * ATM 轉帳啟用
-     * @param flag true:啟用 false:不啟用
      */
     public void setCVS(boolean flag){
         String CVS = (flag)? "1" : "0";
@@ -324,7 +327,6 @@ public class Mpg
 
     /**
      * 超商代碼繳費 啟用
-     * @param flag true:啟用 false:不啟用
      */
     public void setVACC(boolean flag){
         String VACC = (flag)? "1" : "0";
@@ -333,7 +335,6 @@ public class Mpg
 
     /**
      * 條碼繳費啟用
-     * @param flag true:啟用 false:不啟用
      */
     public void setBARCODE(boolean flag){
         String BARCODE = (flag)? "1" : "0";
@@ -342,10 +343,24 @@ public class Mpg
 
     /**
      * 自訂支付啟用
-     * @param flag true:啟用 false:不啟用
      */
     public void setCUSTOM(boolean flag){
         String CUSTOM = (flag)? "1" : "0";
         inputValues.put("CUSTOM", CUSTOM);
+    }
+
+    public void setupToolBar(String title,int toolBarBackgroungRes,int textColor){
+        intent.putExtra("toolBarEnable", true);
+        intent.putExtra("title", title);
+        intent.putExtra("toolBarBackgroungRes", toolBarBackgroungRes);
+        intent.putExtra("textColor", textColor);
+    }
+
+    public void setupCancelBtn(String text){
+        intent.putExtra("cancelBtnText", text);
+    }
+
+    public void setupSuccessBtn(String text){
+        intent.putExtra("successBtnText", text);
     }
 }

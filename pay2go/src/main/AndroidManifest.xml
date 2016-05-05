@@ -6,7 +6,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
 
-        <activity android:name="pay2go.sdk.lutas.pay2go.PayActivity"/>
+        <activity android:name="pay2go.sdk.lutas.pay2go.PayActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
     </application>
 
 </manifest>
