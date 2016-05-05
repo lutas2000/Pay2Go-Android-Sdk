@@ -15,17 +15,17 @@ Pay2Go-Android-Sdk
 二、Import AAR
 ----------------------------------- 
 將pay2go-1.0.0.aar放到project的libs資料夾
-
-allprojects {
-    repositories {
-        jcenter()
-        flatDir {
-            dirs 'libs'
+### 
+    allprojects {
+        repositories {
+            jcenter()
+            flatDir {
+                dirs 'libs'
+            }
         }
     }
-}
 
-compile (name:'pay2go', ext:'aar')
+    compile (name:'pay2go', ext:'aar')
 
 ####加入permission:
     <uses-permission android:name="android.permission.INTERNET"/>
