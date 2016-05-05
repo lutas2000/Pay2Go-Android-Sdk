@@ -1,0 +1,7 @@
+-classpath '/Users/lutas/Library/Android/sdk/platforms/android-23/android.jar'
+-d '/Users/lutas/Documents/Pay2Go-Android-Sdk/pay2go/app/build/docs/javadoc'
+-doctitle 'app 1.0.0 API'
+-quiet 
+-windowtitle 'app 1.0.0 API'
+'/Users/lutas/Documents/Pay2Go-Android-Sdk/pay2go/app/src/main/java/pay2go/sdk/lutas/pay2go/Mpg.java'
+'/Users/lutas/Documents/Pay2Go-Android-Sdk/pay2go/app/src/main/java/pay2go/sdk/lutas/pay2go/PayActivity.java'

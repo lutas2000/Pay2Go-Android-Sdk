@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="returnButtonNagative">#F44336</color>
+    <color name="returnButtonPostive">#43A047</color>
+    <string name="api_version">1.2</string>
+    <string name="app_name">pay2go</string>
+</resources>

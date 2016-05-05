@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="pay2go.sdk.lutas.pay2go.test" >
+
+    <uses-sdk
+        android:minSdkVersion="14"
+        android:targetSdkVersion="23" />
+
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:functionalTest="false"
+        android:handleProfiling="false"
+        android:label="Tests for pay2go.sdk.lutas.pay2go.test"
+        android:targetPackage="pay2go.sdk.lutas.pay2go.test" />
+
+    <application
+        android:allowBackup="true"
+        android:label="@string/app_name"
+        android:supportsRtl="true" >
+        <uses-library android:name="android.test.runner" />
+
+        <activity
+            android:name="pay2go.sdk.lutas.pay2go.PayActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+    </application>
+
+</manifest>

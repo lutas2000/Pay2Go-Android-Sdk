@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@android:color/white">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/pay_toolBar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:elevation="4dp">
+        <TextView
+            android:id="@+id/pay_tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            style="@android:style/TextAppearance.Medium"/>
+        <TextView
+            android:id="@+id/pay_tv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:layout_marginRight="16dp"
+            style="@android:style/TextAppearance.Medium"
+            android:clickable="true"
+            android:textColor="@android:color/darker_gray"
+            android:onClick="onReturnClick"/>
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/pay_tv_error"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000"
+        style="@android:style/TextAppearance.Medium"
+        android:visibility="gone"/>
+
+    <WebView
+        android:id="@+id/pay_webView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+</LinearLayout>
