@@ -12,9 +12,21 @@ Pay2Go-Android-Sdk
 註冊完帳號後在銷售中心開立一個商店<br /> 
 記下以下資訊：商店代號、hashKey、hashIV
 
-二、Import Module
+二、Import AAR
 ----------------------------------- 
-在Android Studio -> File -> new -> Import module選擇pay2go資料夾
+將pay2go-1.0.0.aar放到project的libs資料夾
+
+allprojects {
+    repositories {
+        jcenter()
+        flatDir {
+            dirs 'libs'
+        }
+    }
+}
+
+compile (name:'pay2go', ext:'aar')
+
 ####加入permission:
     <uses-permission android:name="android.permission.INTERNET"/>
   
@@ -29,7 +41,7 @@ Pay2Go-Android-Sdk
     mpg.setLoginType(false); //user是否需要登入支付寶
     mpg.setShop("商店代號", "your hashKey", "your hashIV");
     mpg.setMerchantOrderNo("自訂訂單編號");
-    mpg.setEmail("付款者emial");
+    mpg.setEmail("付款者email");
     mpg.setRespondType("JSON");
     // ============== 選填 =====================
     mpg.setCREDIT(true);
@@ -37,6 +49,8 @@ Pay2Go-Android-Sdk
     mpg.setCVS(true);
     mpg.setVACC(true);
     mpg.setTest(true); //設定使用test API,不填則使用正式API
+    // ============== 設定ToolBar =====================
+    mpg.setupToolBar("toolBar button", toolBarBackground, textColor);
     
     mpg.start();
 
